@@ -9,10 +9,16 @@ export const initMonacoModel = (treeState: NodeData, nodeData: NodeData) => {
         fileName += "/" + target.name
     })
 
-    if (nodeData.name.includes(".go"))
+    if (nodeData.name.endsWith(".go"))
         return {
             language: "go",
             name: fileName,
             value: "package name;"
+        }
+    else if (nodeData.name.endsWith(".js"))
+        return {
+            language: "javascript",
+            name: fileName,
+            value: "const a = 1;"
         }
 }

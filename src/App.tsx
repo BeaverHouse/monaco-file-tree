@@ -1,3 +1,4 @@
+import { DeleteOutlined, FileOutlined } from '@ant-design/icons/lib/icons';
 import Editor from '@monaco-editor/react';
 import React, {useEffect, useState} from 'react';
 import FolderTree, { NodeData } from 'react-folder-tree';
@@ -20,7 +21,12 @@ function App() {
   const [fileId, setFileId] = useState(1);
   const [models, setModels] = useState<MonacoModel>({});
 
-  const onTreeStateChange = (state: NodeData, event: any) => setTreeState(state);
+  const onTreeStateChange = (state: NodeData, event: any) => {
+    console.log(event)
+    setTreeState(state);
+  };
+
+  console.log(treeState)
 
   const onNameClick = (opts: { defaultOnClick: () => void, nodeData: NodeData }) => {
     opts.defaultOnClick();
@@ -40,6 +46,16 @@ function App() {
     setModels(newModels)
   }  
 
+  const DeleteIcon = (props: { onClick: () => void, nodeData: NodeData }) => {
+    const handleClick = () => {
+      const newModels = {...models}
+      delete newModels[props.nodeData._id]
+      setModels(newModels)
+      props.onClick()
+    };
+    return <DeleteOutlined onClick={handleClick}/>;
+  }
+
   return (
     <div style={{
       display: "flex"
@@ -53,6 +69,9 @@ function App() {
           onChange={onTreeStateChange}
           onNameClick={ onNameClick }
           showCheckbox={false}
+          iconComponents={{
+            DeleteIcon: DeleteIcon,
+          }}
         />
       </div>
       <div style={{

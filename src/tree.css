@@ -1,0 +1,42 @@
+.FolderTree .TreeNode{
+    padding:2px 0;
+    display: flex;
+    align-items: center;
+    line-height: 15px;
+    font-size: 15px;
+}
+
+.FolderTree .TreeNode .TreeNodeToolBar{
+    margin-left:3px;
+}
+
+.FolderTree .TreeNode .TreeNodeToolBar svg{
+    margin: 2px;
+    vertical-align: -0.125rem !important;
+}
+
+.FolderTree .TreeNode .iconContainer{
+    padding:0 2px
+}
+
+.FolderTree .TreeNode .iconContainer:not(.typeIconContainer) svg:hover{
+    cursor:pointer
+}
+
+.FolderTree .EditableName .displayName:hover{
+    color:#4d94ff;
+    cursor:pointer
+}
+
+.FolderTree .EditableName .editableNameToolbar{
+    margin-left:3px
+}
+
+.FolderTree .EditableName .editableNameToolbar svg{
+    margin:0 2px
+}
+
+.FolderTree .TreeNode .TreeNodeToolBar .anticon {
+    vertical-align: 0 !important;
+}
+
