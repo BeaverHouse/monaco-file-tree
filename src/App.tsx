@@ -66,8 +66,8 @@ function App() {
   }  
 
   const NullIcon = (props: any) => null;
-  const FolderIcon = (props: any) => <FolderTwoTone {...props}/>
-  const FolderOpenIcon = (props: any) => <FolderOpenTwoTone {...props}/>
+  const FolderIcon = (props: any) => <FolderTwoTone/>
+  const FolderOpenIcon = (props: any) => <FolderOpenTwoTone/>
   const FileIcon = (props: any) => <FileTwoTone {...props}/>
   const EditIcon = (props: any) => <EditTwoTone {...props}/>
   const CancelIcon = (props: any) => <CloseCircleTwoTone {...props}/>
