@@ -1,43 +1,62 @@
-import { DeleteOutlined, FileOutlined } from '@ant-design/icons/lib/icons';
+import { CheckCircleTwoTone, CloseCircleTwoTone, EditTwoTone, FileTwoTone, FolderOpenTwoTone, FolderTwoTone, StopTwoTone } from '@ant-design/icons/lib/icons';
 import Editor from '@monaco-editor/react';
 import React, {useEffect, useState} from 'react';
 import FolderTree, { NodeData } from 'react-folder-tree';
 import { initMonacoModel } from './function';
 
-
-
 const initState = {
-  name: "root",
+  name: "WKFL_1",
+  isDir: true,
+  isOpen: true,
   children: [
     {
-      name: "main.go"
+      name: "main.go",
+      language: "go",
+      value: "hello go"
+    },
+    {
+      name: "api",
+      isDir: true,
+      isOpen: false,
+      children: []
+    },
+    {
+      name: "func.go",
+      language: "go",
+      value: "this is function"
     }
   ]
 }
 
 function App() {
 
-  const [treeState, setTreeState] = useState<NodeData>(initState);
+  const [treeState, setTreeState] = useState<NodeData>();
   const [fileId, setFileId] = useState(1);
   const [models, setModels] = useState<MonacoModel>({});
 
   const onTreeStateChange = (state: NodeData, event: any) => {
-    console.log(event)
     setTreeState(state);
   };
 
   console.log(treeState)
 
-  const onNameClick = (opts: { defaultOnClick: () => void, nodeData: NodeData }) => {
-    opts.defaultOnClick();
+  useEffect(() => {
+    setTimeout(() => {
+      setTreeState(initState)
+      const initModels: any = {}
+      initState.children.forEach((a, idx) => {
+        initModels[idx+1] = a
+      })
+      setModels(initModels)
+    }, 1000);
+  }, [])
   
-    setFileId(opts.nodeData._id)
 
-    if (!models[opts.nodeData._id]) {
-      const newModels = {...models}
-      newModels[opts.nodeData._id] = initMonacoModel(treeState, opts.nodeData) as MonacoItem
-      setModels(newModels)
-    }
+  const onNameClick = (opts: { defaultOnClick: () => void, nodeData: NodeData }) => {
+    if (!opts.nodeData.isDir) {
+      opts.defaultOnClick();    
+      setFileId(opts.nodeData._id)
+    }  
   };
 
   function handleEditorChange(value: string | undefined, event: any) {
@@ -46,15 +65,14 @@ function App() {
     setModels(newModels)
   }  
 
-  const DeleteIcon = (props: { onClick: () => void, nodeData: NodeData }) => {
-    const handleClick = () => {
-      const newModels = {...models}
-      delete newModels[props.nodeData._id]
-      setModels(newModels)
-      props.onClick()
-    };
-    return <DeleteOutlined onClick={handleClick}/>;
-  }
+  const NullIcon = (props: any) => null;
+  const FolderIcon = (props: any) => <FolderTwoTone {...props}/>
+  const FolderOpenIcon = (props: any) => <FolderOpenTwoTone {...props}/>
+  const FileIcon = (props: any) => <FileTwoTone {...props}/>
+  const EditIcon = (props: any) => <EditTwoTone {...props}/>
+  const CancelIcon = (props: any) => <CloseCircleTwoTone {...props}/>
+  const CheckIcon = (props: any) => <CheckCircleTwoTone {...props}/>
+
 
   return (
     <div style={{
@@ -69,8 +87,17 @@ function App() {
           onChange={onTreeStateChange}
           onNameClick={ onNameClick }
           showCheckbox={false}
+          initOpenStatus="custom"
           iconComponents={{
-            DeleteIcon: DeleteIcon,
+            DeleteIcon: NullIcon,
+            CaretDownIcon: NullIcon,
+            CaretRightIcon: NullIcon,
+            FolderIcon: FolderIcon,
+            FolderOpenIcon: FolderOpenIcon,
+            FileIcon: FileIcon,
+            EditIcon: EditIcon,
+            CancelIcon: CancelIcon,
+            OKIcon: CheckIcon
           }}
         />
       </div>
