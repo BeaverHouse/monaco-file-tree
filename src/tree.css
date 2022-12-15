@@ -1,7 +1,5 @@
 .FolderTree .TreeNode{
     padding:2px;
-    display: flex;
-    align-items: center;
     line-height: 20px;
     font-size: 15px;
 }
@@ -21,10 +19,6 @@
 .FolderTree .EditableName .displayName:hover{
     color:#4d94ff;
     cursor:pointer
-}
-
-.FolderTree .EditableName .editableNameToolbar{
-    margin-left:3px
 }
 
 .FolderTree .TreeNode .TreeNodeToolBar .anticon {

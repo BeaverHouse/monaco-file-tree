@@ -2,8 +2,8 @@ import { CheckCircleTwoTone, CloseCircleTwoTone, EditTwoTone, FileTwoTone, Folde
 import Editor from '@monaco-editor/react';
 import React, {useEffect, useState} from 'react';
 import FolderTree, { NodeData } from 'react-folder-tree';
-import { initMonacoModel } from './function';
 
+// sample data
 const initState = {
   name: "WKFL_1",
   isDir: true,
@@ -34,11 +34,43 @@ function App() {
   const [fileId, setFileId] = useState(1);
   const [models, setModels] = useState<MonacoModel>({});
 
+  /**
+   * Tree Custom 
+   */
   const onTreeStateChange = (state: NodeData, event: any) => {
     setTreeState(state);
+
+    // depth 1만 수정 가능 - 추후 수정 필요할 수 있음
+    if (event.type === "renameNode") {
+      const newModels = {...models}
+      newModels[event.path[0] + 1].name = event.params[0]
+      setModels(newModels)
+    }
   };
 
-  console.log(treeState)
+  const onNameClick = (opts: { defaultOnClick: () => void, nodeData: NodeData }) => {
+    if (!opts.nodeData.isDir) {
+      opts.defaultOnClick();    
+      setFileId(opts.nodeData._id)
+    }  
+  };
+
+  const NullIcon = (props: any) => null;
+  const FolderIcon = (props: any) => <FolderTwoTone/>
+  const FolderOpenIcon = (props: any) => <FolderOpenTwoTone/>
+  const FileIcon = (props: any) => <FileTwoTone {...props}/>
+  const EditIcon = (props: any) => <EditTwoTone {...props}/>
+  const CancelIcon = (props: any) => <CloseCircleTwoTone {...props}/>
+  const CheckIcon = (props: any) => <CheckCircleTwoTone {...props}/>
+
+  /**
+   * Monaco Custom 
+   */
+  function handleEditorChange(value: string | undefined, event: any) {
+    const newModels = {...models}
+    newModels[fileId].value = value
+    setModels(newModels)
+  }  
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,36 +82,13 @@ function App() {
       setModels(initModels)
     }, 1000);
   }, [])
-  
-
-  const onNameClick = (opts: { defaultOnClick: () => void, nodeData: NodeData }) => {
-    if (!opts.nodeData.isDir) {
-      opts.defaultOnClick();    
-      setFileId(opts.nodeData._id)
-    }  
-  };
-
-  function handleEditorChange(value: string | undefined, event: any) {
-    const newModels = {...models}
-    newModels[fileId].value = value
-    setModels(newModels)
-  }  
-
-  const NullIcon = (props: any) => null;
-  const FolderIcon = (props: any) => <FolderTwoTone/>
-  const FolderOpenIcon = (props: any) => <FolderOpenTwoTone/>
-  const FileIcon = (props: any) => <FileTwoTone {...props}/>
-  const EditIcon = (props: any) => <EditTwoTone {...props}/>
-  const CancelIcon = (props: any) => <CloseCircleTwoTone {...props}/>
-  const CheckIcon = (props: any) => <CheckCircleTwoTone {...props}/>
-
 
   return (
     <div style={{
-      display: "flex"
+      display: "inline-flex"
     }}>
       <div style={{
-        minWidth: "250px",
+        minWidth: "300px",
         padding: "5px"
       }}>
         <FolderTree
@@ -102,22 +111,22 @@ function App() {
         />
       </div>
       <div style={{
-        minWidth: "500px",
+        width: "300px",
         padding: "5px"
       }}>
-        <pre>
-        {JSON.stringify(models, null, "\t")}
+        <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-all"}}>
+          {JSON.stringify(models, null, "\t")}
         </pre>
       </div>
       <Editor
         height="80vh"
+        width="800px"
         theme='vs-dark'
         onChange={handleEditorChange}
         path={models[fileId]?.name}
         language={models[fileId]?.language}
         value={models[fileId]?.value}
-      />
-      
+      />      
     </div>
   );
 }
