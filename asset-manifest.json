@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/monaco-file-tree/static/css/main.c83cdc9b.css",
-    "main.js": "/monaco-file-tree/static/js/main.eabd3caf.js",
+    "main.css": "/monaco-file-tree/static/css/main.c5b5e936.css",
+    "main.js": "/monaco-file-tree/static/js/main.602a39bb.js",
     "static/js/787.752b6874.chunk.js": "/monaco-file-tree/static/js/787.752b6874.chunk.js",
     "index.html": "/monaco-file-tree/index.html",
-    "main.c83cdc9b.css.map": "/monaco-file-tree/static/css/main.c83cdc9b.css.map",
-    "main.eabd3caf.js.map": "/monaco-file-tree/static/js/main.eabd3caf.js.map",
+    "main.c5b5e936.css.map": "/monaco-file-tree/static/css/main.c5b5e936.css.map",
+    "main.602a39bb.js.map": "/monaco-file-tree/static/js/main.602a39bb.js.map",
     "787.752b6874.chunk.js.map": "/monaco-file-tree/static/js/787.752b6874.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c83cdc9b.css",
-    "static/js/main.eabd3caf.js"
+    "static/css/main.c5b5e936.css",
+    "static/js/main.602a39bb.js"
   ]
 }
